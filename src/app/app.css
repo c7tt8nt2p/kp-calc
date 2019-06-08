@@ -1,0 +1,13 @@
+.invalid-message {
+    color: red;
+}
+
+.remove-product-button {
+    color: red;
+}
+
+/* Coerce the <span> icon container away from display:inline */
+::ng-deep .mat-button-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+}

@@ -1,51 +1,66 @@
 <div class="container mt-3">
     <h2>Products</h2>
 
-    <div>
-        <form [formGroup]="productForm">
-            <div>
-                <mat-form-field>
-                    <input matInput type="number" placeholder="Initial discount(%)"
-                           autocomplete="off" formControlName="initialDiscount" required>
-                    <span matSuffix>%&nbsp;</span>
-                    <mat-error *ngIf="initialDiscount.invalid && initialDiscount.errors.required">Field is required
-                    </mat-error>
-                    <mat-error *ngIf="initialDiscount.invalid && initialDiscount.errors.pattern">Invalid percentage
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <ng-container *ngFor="let aProduct of productList; let i = index;">
-                <div class="d-flex align-items-center">
-                    <span>{{i + 1}})&nbsp;</span>
-                    <mat-form-field class="ml-2">
-                        <input matInput type="text" placeholder="Product name" value="{{aProduct.name}}"
-                               (change)="onNameChanged(i, $event.target.value)"
-                               (blur)="validate()"
-                               autocomplete="off" required>
-                    </mat-form-field>
-
-                    <mat-form-field class="ml-2">
-                        <input matInput type="number" placeholder="price" value="{{aProduct.price}}" autocomplete="off"
-                               (change)="onPriceChanged(i, $event.target.value)"
-                               (blur)="validate()" required>
-                        <span matSuffix>฿&nbsp;</span>
-
+    <div class="d-flex">
+        <div class="col-lg-6 pl-0">
+            <form [formGroup]="productForm">
+                <div>
+                    <mat-form-field>
+                        <input matInput type="number" placeholder="Initial discount(%)"
+                               autocomplete="off" formControlName="initialDiscount" required>
+                        <span matSuffix>%&nbsp;</span>
+                        <mat-error *ngIf="initialDiscount.invalid && initialDiscount.errors.required">Field is required
+                        </mat-error>
+                        <mat-error *ngIf="initialDiscount.invalid && initialDiscount.errors.pattern">Invalid percentage
+                        </mat-error>
                     </mat-form-field>
                 </div>
-            </ng-container>
+                <ng-container *ngFor="let aProduct of productList; let i = index;">
+                    <div class="d-flex align-items-center">
+                        <span>{{i + 1}})&nbsp;</span>
+                        <mat-form-field class="ml-2" style="width: 220px;">
+                            <input matInput type="text" placeholder="Product name" value="{{aProduct.name}}"
+                                   (change)="onNameChanged(i, $event.target.value)"
+                                   (blur)="validate()"
+                                   autocomplete="off" required>
+                            <button mat-button *ngIf="aProduct.name" matSuffix mat-icon-button
+                                    (click)="onNameCleared(i)">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
 
-            <br>
-            <div class="d-flex flex-column">
-                <button type="button" mat-mini-fab color="primary" (click)="addProduct()"
-                        matTooltip="Click to add a product">
-                    <mat-icon>add</mat-icon>
-                </button>
+                        <mat-form-field class="ml-3" style="width: 100px;">
+                            <input matInput type="number" placeholder="price" value="{{aProduct.price}}"
+                                   autocomplete="off"
+                                   (change)="onPriceChanged(i, $event.target.value)"
+                                   (blur)="validate()" required>
+                            <span matSuffix>฿&nbsp;</span>
+
+                        </mat-form-field>
+                        <button class="remove-product-button" mat-icon-button (click)="removeProduct(i)"
+                                matTooltip="remove">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </ng-container>
+
                 <br>
-                <button type="submit" mat-raised-button color="primary" style="width: 100px;"
-                        matTooltip="Click to calculate" [disabled]="!productForm.valid" (click)="calculate()">Calculate
-                </button>
-            </div>
-        </form>
-        <span *ngIf="!valid">Some fields are invalid.</span>
+                <div class="d-flex flex-column">
+                    <button type="button" mat-mini-fab color="primary" (click)="addProduct()"
+                            matTooltip="Click to add a product">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <br>
+                    <button type="submit" mat-raised-button color="primary" style="width: 100px;"
+                            matTooltip="Click to calculate" [disabled]="!productForm.valid" (click)="calculate()">
+                        Calculate
+                    </button>
+                </div>
+            </form>
+            <span *ngIf="!valid" class="invalid-message">*Some fields are empty or invalid.</span>
+        </div>
+
+        <div class="col-lg-6">
+        </div>
     </div>
 </div>

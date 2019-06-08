@@ -5,7 +5,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
     selector: 'app-root',
     templateUrl: 'app.html',
-    styles: []
+    styleUrls: ['app.css']
 })
 export class AppComponent implements OnInit {
     title = 'kp-calc';
@@ -33,8 +33,16 @@ export class AppComponent implements OnInit {
         this.productList.push(newProduct);
     }
 
+    removeProduct(index: number): void {
+        this.productList.splice(index, 1);
+    }
+
     onNameChanged(index: number, value: string): void {
         this.productList[index].name = value;
+    }
+
+    onNameCleared(index: number): void {
+        this.productList[index].name = '';
     }
 
     onPriceChanged(index: number, value: number): void {
@@ -62,13 +70,11 @@ export class AppComponent implements OnInit {
         this.validate();
 
         if (this.valid) {
-
         }
     }
 
     get initialDiscount() {
         return this.productForm.get('initialDiscount');
     }
-
 
 }
