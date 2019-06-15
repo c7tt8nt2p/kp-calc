@@ -61,18 +61,27 @@
             <span *ngIf="!valid" class="invalid-message">*Some fields are empty or invalid.</span>
         </div>
 
-        <div class="col-lg-6 d-flex">
-            <table>
-                <th>Summary</th>
-                <tr>
-                    <td>Total price:&nbsp;&nbsp;</td>
-                    <td class="table-data">{{totalPrice | number}}</td>
-                </tr>
-                <tr>
-                    <td>Total price - initial discount:&nbsp;&nbsp;</td>
-                    <td class="table-data">{{totalPriceInitialDiscountDiff | number}}</td>
-                </tr>
-            </table>
+        <div class="col-lg-6 d-flex flex-column">
+            <div>
+                <table>
+                    <th>Summary</th>
+                    <tr>
+                        <td>Total price:&nbsp;&nbsp;</td>
+                        <td class="table-data">{{totalPrice | number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total price after initial discount:&nbsp;&nbsp;</td>
+                        <td class="table-data"
+                            matTooltip="{{totalPrice}} - {{initialDiscount.value}}%">{{totalPriceInitialDiscountDiff | number}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <hr/>
+            </div>
+            <div>
+                ss
+            </div>
         </div>
     </div>
 </div>
