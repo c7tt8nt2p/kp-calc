@@ -26,7 +26,9 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.titleService.setTitle(this.title);
         this.productForm = new FormGroup({
-            initialDiscount: new FormControl(+0, [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')])
+            initialDiscount: new FormControl(+0, [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')]),
+            promotionPrice: new FormControl(+0, [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')]),
+            promotionDiscount: new FormControl(+0, [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')])
         });
     }
 
@@ -92,11 +94,26 @@ export class AppComponent implements OnInit {
     calculate(): void {
         this.validate();
         if (this.valid) {
+            this.doGrouping();
+        }
+    }
+
+    doGrouping(): void {
+        for (let i = 0; i < this.productList.length; i++) {
+            let aProduct = this.productList[i];
         }
     }
 
     get initialDiscount() {
         return this.productForm.get('initialDiscount');
+    }
+
+    get promotionPrice() {
+        return this.productForm.get('promotionPrice');
+    }
+
+    get promotionDiscount() {
+        return this.productForm.get('promotionDiscount');
     }
 
 }

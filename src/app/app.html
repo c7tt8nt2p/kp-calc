@@ -16,6 +16,32 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+                <div>
+                    <span>When buying</span>
+                    <mat-form-field [floatLabel]="'never'" class="ml-3 mr-3" style="width: 100px;">
+                        <input matInput type="number" placeholder="price"
+                               autocomplete="off" formControlName="promotionPrice"
+                               (blur)="validate()" required>
+                        <span matSuffix>฿&nbsp;</span>
+                        <mat-error *ngIf="promotionPrice.invalid && promotionPrice.errors.required">Field is required
+                        </mat-error>
+                        <mat-error *ngIf="promotionPrice.invalid && promotionPrice.errors.pattern">Invalid price
+                        </mat-error>
+                    </mat-form-field>
+                    <span>, get a discount of</span>
+                    <mat-form-field [floatLabel]="'never'" class="ml-3 mr-3" style="width: 100px;">
+                        <input matInput type="number" placeholder="price"
+                               autocomplete="off" formControlName="promotionDiscount"
+                               (blur)="validate()" required>
+                        <span matSuffix>฿&nbsp;</span>
+                        <mat-error *ngIf="promotionDiscount.invalid && promotionDiscount.errors.required">Field is
+                            required
+                        </mat-error>
+                        <mat-error *ngIf="promotionDiscount.invalid && promotionDiscount.errors.pattern">Invalid price
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <hr/>
                 <ng-container *ngFor="let aProduct of productList; let i = index;">
                     <div class="d-flex align-items-center">
                         <span>{{i + 1}})&nbsp;</span>
