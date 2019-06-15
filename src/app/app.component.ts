@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from "./model/product";
+import {Product} from './model/product';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-root',
@@ -8,21 +9,24 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
     styleUrls: ['app.css']
 })
 export class AppComponent implements OnInit {
-    title = 'kp-calc';
+    title = 'KING POWER Calculator';
 
     productForm: FormGroup;
     productList: Product[] = [];
     valid: boolean = true;
 
-    constructor() {
+    totalPrice: number = 0;
+    totalPriceInitialDiscountDiff: number = 0;
+
+
+    constructor(private titleService: Title) {
     }
 
 
     ngOnInit(): void {
+        this.titleService.setTitle(this.title);
         this.productForm = new FormGroup({
-            initialDiscount: new FormControl('', [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')])
-            // name: new FormControl('', [Validators.required]),
-            // price: new FormControl('', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)])
+            initialDiscount: new FormControl(+0, [Validators.required, Validators.pattern('\\d{1,2}(?!\\d)|100')])
         });
     }
 
@@ -35,6 +39,7 @@ export class AppComponent implements OnInit {
 
     removeProduct(index: number): void {
         this.productList.splice(index, 1);
+        this.validate();
     }
 
     onNameChanged(index: number, value: string): void {
@@ -46,7 +51,7 @@ export class AppComponent implements OnInit {
     }
 
     onPriceChanged(index: number, value: number): void {
-        this.productList[index].price = value;
+        this.productList[index].price = +value;
     }
 
     validate(): void {
@@ -57,18 +62,35 @@ export class AppComponent implements OnInit {
                 return;
             }
             let price = aProduct.price.toString();
-            let isNumber = new RegExp(/^-?(0|[1-9]\d*)?$/).test(price);
+            let isNumber = !isNaN(Number(price));
             if (!price || !isNumber) {
                 this.valid = false;
                 return;
             }
         }
         this.valid = true;
+        this.postValidate();
+    }
+
+    postValidate(): void {
+        if (!this.productForm.valid) {
+            return;
+        }
+
+        // total price
+        if (!this.productList.length) {
+            this.totalPrice = 0;
+        } else {
+            this.totalPrice = this.productList.map(p => p.price).reduce((sum, current) => sum + current, 0);
+        }
+
+        // total price and initial discount difference
+        let initialDiscount = +this.initialDiscount.value;
+        this.totalPriceInitialDiscountDiff = this.totalPrice - (this.totalPrice * initialDiscount / 100);
     }
 
     calculate(): void {
         this.validate();
-
         if (this.valid) {
         }
     }

@@ -14,3 +14,6 @@ body {
     border: 0 !important;
 }
 
+.table-data {
+    font-weight: bold;
+}
