@@ -1,8 +1,7 @@
-<div class="container mt-3">
+<div class="container d-flex flex-column mt-3">
     <h2>Products</h2>
-
-    <div class="d-flex">
-        <div class="col-lg-6 pl-0">
+    <div class="d-flex flex-wrap">
+        <div class="col-lg pl-0">
             <form [formGroup]="productForm">
                 <div>
                     <mat-form-field>
@@ -86,8 +85,7 @@
             </form>
             <span *ngIf="!valid" class="invalid-message">*Some fields are empty or invalid.</span>
         </div>
-
-        <div class="col-lg-6 d-flex flex-column">
+        <div class="col-lg d-flex flex-column pl-0 mt-lg-0 mt-md-4">
             <div>
                 <table>
                     <th>Summary</th>
