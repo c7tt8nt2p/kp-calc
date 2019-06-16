@@ -114,13 +114,13 @@
                     <th style="width: 100px;">Pay</th>
                     <ng-container *ngFor="let anEntry of possibleGroupMap | keyvalue: keyDescOrder">
                         <tr>
-                            <td>{{productListToText(anEntry.value)}}:&nbsp;&nbsp;</td>
+                            <td>{{productListToText(anEntry.key)}}:&nbsp;&nbsp;</td>
                             <td class="table-data"
-                                matTooltip="{{anEntry.key | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.key) | number}}
+                                matTooltip="{{anEntry.value | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.value) | number}}
                             </td>
                             <td class="table-data"
-                                matTooltip="{{takeInitialDiscount(anEntry.key)}} - {{promotionDiscount.value}}">
-                                {{takeInitialDiscount(anEntry.key) - promotionDiscount.value | number}}
+                                matTooltip="{{takeInitialDiscount(anEntry.value)}} - {{promotionDiscount.value}}">
+                                {{takeInitialDiscount(anEntry.value) - promotionDiscount.value | number}}
                             </td>
                         </tr>
                     </ng-container>
@@ -135,13 +135,13 @@
                     <th style="width: 100px;">Pay</th>
                     <ng-container *ngFor="let anEntry of impossibleGroupMap | keyvalue: keyDescOrder">
                         <tr>
-                            <td>{{productListToText(anEntry.value)}}:&nbsp;&nbsp;</td>
+                            <td>{{productListToText(anEntry.key)}}:&nbsp;&nbsp;</td>
                             <td class="table-data"
-                                matTooltip="{{anEntry.key | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.key) | number}}
+                                matTooltip="{{anEntry.value | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.value) | number}}
                             </td>
                             <td class="table-data"
-                                matTooltip="{{takeInitialDiscount(anEntry.key)}} - {{promotionDiscount.value}}">
-                                {{takeInitialDiscount(anEntry.key) - promotionDiscount.value | number}}
+                                matTooltip="{{takeInitialDiscount(anEntry.value)}} - {{promotionDiscount.value}}">
+                                {{takeInitialDiscount(anEntry.value) - promotionDiscount.value | number}}
                             </td>
                         </tr>
                     </ng-container>

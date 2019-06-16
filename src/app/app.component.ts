@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
     totalPrice: number = 0;
     totalPriceInitialDiscountDiff: number = 0;
 
-    possibleGroupMap: Map<number, Product[]> = new Map<number, Product[]>();
-    impossibleGroupMap: Map<number, Product[]> = new Map<number, Product[]>();
+    possibleGroupMap: Map<Product[], number> = new Map<Product[], number>();
+    impossibleGroupMap: Map<Product[], number> = new Map<Product[], number>();
 
     keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
@@ -98,7 +98,6 @@ export class AppComponent implements OnInit {
         }
 
         // total price and initial discount difference
-        let initialDiscount = +this.initialDiscount.value;
         this.totalPriceInitialDiscountDiff = this.takeInitialDiscount(this.totalPrice)
     }
 
@@ -112,7 +111,7 @@ export class AppComponent implements OnInit {
     }
 
     doGrouping(): void {
-        let groupPriceMap: Map<number, Product[]> = new Map<number, Product[]>();
+        let groupPriceMap: Map<Product[], number> = new Map<Product[], number>();
 
         let combinationList: Product[] = this.getCombinations(this.productList);
         for (let i = 0; i < combinationList.length; i++) {
@@ -121,31 +120,31 @@ export class AppComponent implements OnInit {
                 continue;
             }
             let totalPrice = aCombination.map(p => p.price).reduce((sum, current) => sum + current, 0);
-            groupPriceMap.set(totalPrice, aCombination);
+            groupPriceMap.set(aCombination, totalPrice);
         }
         let sorted = AppComponent.sortGroupPriceMap(groupPriceMap);
         this.displayResults(sorted);
     }
 
-    displayResults(sortedGroupPriceMap: Map<number, Product[]>): void {
-        sortedGroupPriceMap.forEach((productList, totalPrice) => {
+    displayResults(sortedGroupPriceMap: Map<Product[], number>): void {
+        sortedGroupPriceMap.forEach((totalPrice, productList) => {
             let priceWithInitialDiscount = this.takeInitialDiscount(totalPrice);
             if (priceWithInitialDiscount >= this.promotionPrice.value) {
-                this.possibleGroupMap.set(totalPrice, productList);
+                this.possibleGroupMap.set(productList, totalPrice);
             } else {
-                this.impossibleGroupMap.set(totalPrice, productList);
+                this.impossibleGroupMap.set(productList, totalPrice);
             }
         });
     }
 
-    static sortGroupPriceMap(toBeSorted: Map<number, Product[]>): Map<number, Product[]> {
-        let sortedMap: Map<number, Product[]>;
+    static sortGroupPriceMap(toBeSorted: Map<Product[], number>): Map<Product[], number> {
+        let sortedMap: Map<Product[], number>;
 
         sortedMap = new Map(
             Array
                 .from(toBeSorted)
                 .sort((a, b) => {
-                    return b[0] - a[0];
+                    return b[1] - a[1];
                 })
         );
 
