@@ -130,7 +130,6 @@ export class AppComponent implements OnInit {
     displayResults(sortedGroupPriceMap: Map<number, Product[]>): void {
         sortedGroupPriceMap.forEach((productList, totalPrice) => {
             let priceWithInitialDiscount = this.takeInitialDiscount(totalPrice);
-            console.log(priceWithInitialDiscount + ' :: ' + this.promotionPrice.value + ' --> ' + (totalPrice >= this.promotionPrice.value));
             if (priceWithInitialDiscount >= this.promotionPrice.value) {
                 this.possibleGroupMap.set(totalPrice, productList);
             } else {
