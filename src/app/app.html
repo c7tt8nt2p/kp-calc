@@ -92,13 +92,13 @@
                 <table>
                     <th>Summary</th>
                     <tr>
-                        <td>Total price:&nbsp;&nbsp;</td>
+                        <td style="width: 250px;">Total price:&nbsp;&nbsp;</td>
                         <td class="table-data">{{totalPrice | number}}</td>
                     </tr>
                     <tr>
-                        <td>Total price after initial discount:&nbsp;&nbsp;</td>
+                        <td style="width: 250px;">Total price after initial discount:&nbsp;&nbsp;</td>
                         <td class="table-data"
-                            matTooltip="{{totalPrice}} - {{initialDiscount.value}}%">{{totalPriceInitialDiscountDiff | number}}</td>
+                            matTooltip="{{totalPrice | number}} - {{initialDiscount.value}}%">{{totalPriceInitialDiscountDiff | number}}</td>
                     </tr>
                 </table>
             </div>
@@ -106,7 +106,46 @@
                 <hr/>
             </div>
             <div>
-                ss
+                <span>Promotion n <span
+                        style="color: green"><b>applies</b></span> with following product groups: </span>
+                <table>
+                    <th style="width: 250px;">Product group</th>
+                    <th style="width: 100px;">Price</th>
+                    <th style="width: 100px;">Pay</th>
+                    <ng-container *ngFor="let anEntry of possibleGroupMap | keyvalue: keyDescOrder">
+                        <tr>
+                            <td>{{productListToText(anEntry.value)}}:&nbsp;&nbsp;</td>
+                            <td class="table-data"
+                                matTooltip="{{anEntry.key | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.key) | number}}
+                            </td>
+                            <td class="table-data"
+                                matTooltip="{{takeInitialDiscount(anEntry.key)}} - {{promotionDiscount.value}}">
+                                {{takeInitialDiscount(anEntry.key) - promotionDiscount.value | number}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </table>
+            </div>
+            <div>
+                <span>Promotion <span
+                        style="color: crimson"><b>won't apply</b></span> with following product groups: </span>
+                <table>
+                    <th style="width: 250px;">Product group</th>
+                    <th style="width: 100px;">Price</th>
+                    <th style="width: 100px;">Pay</th>
+                    <ng-container *ngFor="let anEntry of impossibleGroupMap | keyvalue: keyDescOrder">
+                        <tr>
+                            <td>{{productListToText(anEntry.value)}}:&nbsp;&nbsp;</td>
+                            <td class="table-data"
+                                matTooltip="{{anEntry.key | number}} - {{initialDiscount.value}}%">{{takeInitialDiscount(anEntry.key) | number}}
+                            </td>
+                            <td class="table-data"
+                                matTooltip="{{takeInitialDiscount(anEntry.key)}} - {{promotionDiscount.value}}">
+                                {{takeInitialDiscount(anEntry.key) - promotionDiscount.value | number}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </table>
             </div>
         </div>
     </div>
